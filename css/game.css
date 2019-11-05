@@ -1,0 +1,11 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: rgb(56, 53, 53, .8)
+  }
+
+canvas {
+  display: block;
+  margin: 35px auto;
+  border-radius: 8px
+}

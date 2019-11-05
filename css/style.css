@@ -1,0 +1,28 @@
+body {
+    padding: 0;
+    margin: 0;
+    background: white;
+    background-image: url("../img/background.png");
+    background-size: cover 
+  }
+
+
+img {
+    width: 150px;
+}
+
+span {
+    display: inline-block; 
+    position: absolute
+}
+
+
+p {
+    font-size: 1.4em;
+    font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    color: #E7161A
+}
+  
