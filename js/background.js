@@ -24,3 +24,11 @@ class Background {
   }
 
 }   
+
+class Background2 extends Background {
+  constructor(ctx, width,height) {
+  super(ctx, width,height)
+    this.image = new Image()
+      this.image.src = "img/background2.png"
+}
+}

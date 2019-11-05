@@ -31,7 +31,7 @@ const Game = {
         this.canvas.height = this.height
 
         this.start()
-       // this.refresh()
+        
 
 
     },
@@ -86,6 +86,7 @@ const Game = {
 
     reset() {
         this.background = new Background(this.ctx, this.width, this.height)
+        
         this.orangeframe = new Orangeframe(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
         this.dollars = []
@@ -245,12 +246,18 @@ const Game = {
     },
       
     chronometer() {
-        if (this.framesCounter % 60 == 0)  {
+        if (this.framesCounter % 60 == 0 && this.totalTime>=-1)  {
         this.totalTime--
-        console.log("payaso")
-            if(this.totalTime<0) 
-            alert("We run out of time!!!")
+        } else { 
+            this.totalTime
         }
+           if (this.totalTime==-1) {
+                            this.ctx.font = "bold 48px Helvetica, Arial, sans-serif";
+                            this.ctx.fillText(`You have reached $${this.fortune}.000 Million `, this.canvas.width/2-100, this.canvas.height/2);
+                            clearInterval(this.interval)
+        
+        }
+        
     }
 }
 
