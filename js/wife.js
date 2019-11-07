@@ -1,20 +1,22 @@
 class Wife {
-    constructor(ctx, w, h) {
+    constructor(ctx, w, h, src) {
         this.ctx = ctx;
         this.gameWidth = w
         this.gameHeight = h
     
         this.image = new Image()
-        this.image.src = "img/wife.png"
+        this.image.src = src
   
-        this.width = 70
-        this.height = 90
+        this.width = 110
+        this.height = 150
     
-       this.posX = Math.floor(Math.random()*this.gameWidth-220)
+       this.posX = Math.floor(Math.random() * ((this.gameWidth-360) - 20)) + 20
+
+       
      
         this.posY = 0-this.height 
 
-        this.velY = 3
+        this.velY = 6
     }
   
     draw() {

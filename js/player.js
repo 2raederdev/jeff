@@ -15,9 +15,18 @@ class Player {
 
         this.setListeners(); 
 
-        this.vel = 18
+        this.vel = 5
 
         this.keys = keys
+
+        this.fortunita = []
+        this.bullets = []
+
+        this.left = false
+        this.right = false
+
+        this.boxshoot = document.createElement("audio")
+        this.boxshoot.src = "music/audiojeff-short.mp3"
   
     }
     draw() {
@@ -28,37 +37,67 @@ class Player {
         this.width,
         this.height
       )
+      this.bullets.forEach(bul => bul.draw())
+      this.bullets.forEach(bul => bul.move())    
+
 
     }
 
     goLeft() {
-        this.posX >= 15 ? this.posX -= this.vel : null
+      if(this.posX >= 20  && this.left) this.posX -= this.vel
     }
 
     goRight() {
-        this.posX <= this.gameWidth - this.width - 220 ? this.posX += this.vel : null
+      if((this.posX <= this.gameWidth - this.width - 330) && this.right)  this.posX += this.vel
     }
 
-    // goUp() {
-    //   this.posY >= 20 ? this.posY -= this.vel : null
-    // }
+    shoot() {
+      
+      if(this.fortunita.length > 0) {
+        Game.level == undefined ? null : this.bullets.push(new Bullet(this.ctx, this.posX, this.posY))
 
-    // goDown() {
-    //   this.posY <= this.gameHeight - this.height-20 ? this.posY += this.vel : null
-    // }
+        this.fortunita.pop()
+
+        // let boxshoot = document.createElement("audio")
+        // boxshoot.src = "music/mynameisjeff.mp3"
+        this.boxshoot.volume = .5
+        this.boxshoot.play()
+      } 
+
+    }
 
     setListeners() {
         document.onkeydown = e => {
           switch (e.keyCode){
             case Game.keys.LEFT :
-              this.goLeft() 
+              this.left = true
+              // this.goLeft() 
               break
             case Game.keys.RIGHT :
-              this.goRight()
+              this.right = true
+            //  this.goRight()
+              break
+              case Game.keys.SHOOT :
+                  this.shoot()
               break
           }
         }
+
+        document.onkeyup = e => {
+          switch (e.keyCode){
+            case Game.keys.LEFT :
+              this.left = false
+              break
+            case Game.keys.RIGHT :
+              this.right = false
+              break
+          }
+        }
+        
     }
+
+
+
 
 
   }

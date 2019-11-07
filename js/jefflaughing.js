@@ -1,20 +1,20 @@
-class Dollar {
+class Jefflaughing {
     constructor(ctx, w, h) {
         this.ctx = ctx;
         this.gameWidth = w
         this.gameHeight = h
     
         this.image = new Image()
-        this.image.src = "img/dollar.png"
+        this.image.src = "./img/jefflaughing.png"
   
-        this.width = 30
-        this.height = 30
+        this.width = 200
+        this.height = 200
     
-       this.posX = Math.floor(Math.random() * ((this.gameWidth-360) - 20)) + 20
+        this.posX = Math.floor(Math.random() * ((this.gameWidth-360) - 20)) + 20
      
-        this.posY = 0-this.height 
+        this.posY = 0-this.height
 
-        this.velY = 3
+        this.velY = 5
     }
   
     draw() {
@@ -23,8 +23,9 @@ class Dollar {
           this.posX,
           this.posY,
           this.width,
-          this.height
+          this.height,
         );
+        console.log("NOOOOOOOO")
       }
   
     move() {

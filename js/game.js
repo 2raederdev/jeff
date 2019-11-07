@@ -9,11 +9,12 @@ const Game = {
     height: undefined,
     fps: 60,
     dollars: [],
-    wifes: [],
+    enemies: [],
     euflags: [],
     framesCounter: 0,
     fortune: 0,
     totalTime: 10,
+
     keys: {
         LEFT: 65,
         RIGHT: 68,
@@ -30,10 +31,8 @@ const Game = {
         this.canvas.width = this.width
         this.canvas.height = this.height
 
-        this.start()
+        this.start() 
         
-
-
     },
 
     start() {
@@ -46,21 +45,24 @@ const Game = {
             
             if (this.framesCounter > 1000) this.framesCounter = 0
             
+            if(this.level)
+
             this.clear()
             this.drawAll()  
             this.moveAll()
             this.generateDollars()
             this.dollarCollision()
-            this.generateWifes()
-            this.wifesCollision()
+            this.generateEnemies()
+            this.enemiesCollision()
             this.generateEuflags()
             this.euflagsCollision()
             this.clearDollars()
-            this.clearWifes()
+            this.clearEnemies()
             this.clearEuflags()
             this.refresh()
             if(this.fortune < 0) this.gameOver()
             this.chronometer()
+            // this.reset2()
             
         }, 1000/this.fps)
 
@@ -85,20 +87,36 @@ const Game = {
     },
 
     reset() {
-        this.background = new Background(this.ctx, this.width, this.height)
+        this.level1 = true
+        this.background = new Background(this.ctx, this.width, this.height, "img/background.png")
         
         this.orangeframe = new Orangeframe(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
+        
+        
         this.dollars = []
         this.wifes = []
         this.euflags = []
     },
 
+    reset2() {
+        this.level1 = undefined
+        this.level2 = true
+        this.background = new Background(this.ctx, this.width, this.height, "img/background2.png")
+        
+        this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
+        
+        this.dollars = []
+        this.enemies = []
+        this.euflags = []
+    },
+
+
     drawAll() {
         this.background.draw()
         this.player.draw()
         this.dollars.forEach(dol => dol.draw());
-        this.wifes.forEach(wif => wif.draw())
+        this.enemies.forEach(ene => ene.draw())
         this.euflags.forEach(eu => eu.draw())
         this.orangeframe.draw()
         this.drawfortunita()
@@ -108,7 +126,7 @@ const Game = {
     moveAll() {
         this.background.move()
         this.dollars.forEach(dol => dol.move())
-        this.wifes.forEach(wif => wif.move())
+        this.enemies.forEach(ene => ene.move())
         this.euflags.forEach(eu => eu.move())
     },
 
@@ -163,7 +181,8 @@ const Game = {
     },
 
     drawfortunita() {
-        this.ctx.font = "bold 96px Helvetica, Arial, sans-serif";
+        this.ctx.font = "30px sans-serif";
+        this.ctx.fillStyle = "white"
         this.ctx.fillText(Math.floor(this.fortune), 40, 125);
     },
       
@@ -181,29 +200,29 @@ const Game = {
     },
                 
 
-    generateWifes() {
+    generateEnemies() {
         if (this.framesCounter % 415 == 0) {
             
-            this.wifes.push(new Wife(this.ctx, this.width, this.height)); 
+            this.enemies.push(new Enemies(this.ctx, this.width, this.height, "img/wife.png")); 
         }       
         
     },
     
-    clearWifes() {
-        this.wifes.forEach((wif, idx) => {
-          if (wif.posY >= this.canvas.height) {
-              this.wifes.splice(idx, 1);
+    clearEnemies() {
+        this.enemies.forEach((ene, idx) => {
+          if (ene.posY >= this.canvas.height) {
+              this.enemies.splice(idx, 1);
             }
         });
     },
 
-    wifesCollision() {   
-        this.wifes.some(wif => { if (
-            this.player.posX + this.player.width >= wif.posX &&
-            this.player.posX <= wif.posX + wif.width &&
-            this.player.posY <= wif.posY+wif.height
+    enemiesCollision() {   
+        this.enemies.some(ene => { if (
+            this.player.posX + this.player.width >= ene.posX &&
+            this.player.posX <= ene.posX + ene.width &&
+            this.player.posY <= ene.posY+ene.height
             )  {
-                this.wifes.shift()
+                this.enemies.shift()
                 this.halffortunita()
             }
         })
@@ -241,7 +260,8 @@ const Game = {
     },
 
     drawTime() {
-        this.ctx.font = "bold 96px Helvetica, Arial, sans-serif";
+        this.ctx.font = "bold 96px Helvetica,  sans-serif";
+        this.ctx.fillStyle = "white"
         this.ctx.fillText(Math.floor(this.totalTime), 190, 125);
     },
       
@@ -252,15 +272,27 @@ const Game = {
             this.totalTime
         }
            if (this.totalTime==-1) {
-                            this.ctx.font = "bold 48px Helvetica, Arial, sans-serif";
-                            this.ctx.fillText(`You have reached $${this.fortune}.000 Million `, this.canvas.width/2-100, this.canvas.height/2);
                             clearInterval(this.interval)
-        
+                            this.reset()
+                            
         }
         
-    }
+    }, 
+
 }
 
 
 
 
+
+
+/*
+
+crear funcion change level global
+
+dentro gestionar el reseteo o borrado de lo que no necesitemos
+cambiar el background por uno nuevo
+new enemy
+
+
+*/

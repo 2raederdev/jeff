@@ -1,11 +1,13 @@
 class Background {
-  constructor(ctx, width,height) {
+  constructor(ctx, width,height, src) {
       this.ctx =ctx
       this.width = width
       this.height = height
 
       this.image = new Image()
-      this.image.src = "img/background.png"
+      // this.image.src = "img/background.png"
+      this.image.src = src
+
       this.posX = 0
       this.posY =0
 
@@ -24,11 +26,3 @@ class Background {
   }
 
 }   
-
-class Background2 extends Background {
-  constructor(ctx, width,height) {
-  super(ctx, width,height)
-    this.image = new Image()
-      this.image.src = "img/background2.png"
-}
-}
