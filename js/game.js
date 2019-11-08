@@ -339,7 +339,7 @@ const Game = {
 
 
     generateJeffs() {
-        if (this.framesCounter % 900 == 0) {
+        if (this.framesCounter % 10 == 0) {
             this.jeff.push(new Jefflaughing(this.ctx, this.width, this.height)); 
         }       
         console.log(this.jeff)
