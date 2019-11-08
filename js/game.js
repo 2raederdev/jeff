@@ -17,7 +17,7 @@ const Game = {
     startin: 3,
     framesCounter: 0,
     fortune: 0,
-    totalTime: 45,
+    totalTime: 40,
     markLifes: [],
     music: new Audio("music/fondomusic.mp3"),
     laugh: new Audio("music/risa.mp3"),
