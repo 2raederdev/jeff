@@ -11,14 +11,16 @@ const Game = {
     dollars: [],
     wife: [],
     euflags: [],
-    enemies: [],
+    enemies: undefined,
     jeff: [],
-    level: undefined,
+    level: 0,
+    startin: 3,
     framesCounter: 0,
     fortune: 0,
-    totalTime: 30,
+    totalTime: 20,
     markLifes: [],
     music: new Audio("music/fondomusic.mp3"),
+    laugh: new Audio("music/risa.mp3"),
     keys: {
         LEFT: 37,
         RIGHT: 39,
@@ -42,7 +44,7 @@ const Game = {
 
     start() {
 
-        this.reset()
+        this.reset0()
         
         this.interval = setInterval(() => {
             
@@ -50,10 +52,17 @@ const Game = {
             
             if (this.framesCounter > 1000) this.framesCounter = 0
 
-            if (this.level == undefined) {
+            if (this.level === 0) {
+            
+                this.clear()
+                this.drawAll0()
+                
+                this.startchrono()
+            }
+            else if (this.level == 1) {
             
             this.clear()
-            this.drawAll()  
+            this.drawAll()
             this.moveAll()
             this.generateDollars()
             this.dollarCollision()
@@ -68,9 +77,10 @@ const Game = {
             this.fondoMusic()
             if(this.fortune < 0) this.gameOver()
             this.chronometer()
-        } else {
+        } else if(this.level == 2) {
             this.clear()
             this.drawAllL2()
+            // this.enemies.speedUp()  
             this.moveAllL2()
             // this.enemies.speedUp()  
             this.markCollision()
@@ -89,14 +99,19 @@ const Game = {
 
         let techno = document.createElement("audio")
         techno.src = "music/dead.mp3"
-        techno.volume = .5
+        techno.volume = .4
         techno.play()
 
         this.repartidor.draw()
         clearInterval(this.interval);
     },
 
-    reset() {
+
+    reset0() {
+        this.background = new Background(this.ctx, this.width, this.height, "img/background3.png")
+    },
+
+    reset1() {
         this.background = new Background(this.ctx, this.width, this.height, "img/background.png")
         this.frame = new Frame(this.ctx, this.width, this.height, "img/orangeframe.png")
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.gameWidth, this.gameHeight, this.keys)
@@ -112,11 +127,10 @@ const Game = {
             new Dislike(this.ctx, this.width, this.height, 260), 
             new Dislike(this.ctx, this.width, this.height, 420) )
 
-
     },
 
     fondoMusic() {
-            this.music.volume = .3
+            this.music.volume = .2
             // this.music.loop = true
             this.music.play()
     },
@@ -149,10 +163,14 @@ const Game = {
         this.jeff.forEach(jef => jef.draw())
         this.markLifes.forEach(mar => mar.draw())
 
+    },
 
-        // this.player.markLifes.forEach(eu => eu.this.player.drawMarkLifes())
+    drawAll0() {
+        this.background.draw()
+        this.drawTime0()
 
     },
+
 
     moveAll() {
         this.background.move()
@@ -178,7 +196,7 @@ const Game = {
 
     generateDollars() {
 
-         if (this.framesCounter % 179 == 0) {
+         if (this.framesCounter % 137 == 0) {
 
             this.dollars.push(new Dollar(this.ctx, this.width, this.height)); 
         }     
@@ -234,17 +252,29 @@ const Game = {
             bul.posX < this.enemies.posX + this.enemies.width &&
             bul.posX + bul.width > this.enemies.posX
         ) {
+            console.log(this.enemies.velX)
+            if(this.enemies.velX >= 0) this.enemies.velX += 4
+            if(this.enemies.velX < 0) this.enemies.velX -= 4
+
+            
+            // this.enemies.velX += 2
             this.player.bullets.splice(idx,1)
             this.markLifes.pop()
         }
         })
     },
 
+    winMusic() {
+            this.laugh.volume = .4
+            this.laugh.play()
+    },
+
     youWin() {
         if(this.markLifes.length == 0) {
-
+    
         this.generateJeffs()
-        
+        this.stopMusic()  
+        this.winMusic()      
     
         //  this.ctx.font = "bold 96px Helvetica, Arial, sans-serif"
         // this.ctx.fillText("You Win", 40, 125)
@@ -265,7 +295,7 @@ const Game = {
 
                 let dollarsound = document.createElement("audio")
                 dollarsound.src = "music/coin.wav"
-                dollarsound.volume = .5
+                dollarsound.volume = .4
                 dollarsound.play()
                 // this.morefortunita()
             }
@@ -275,7 +305,7 @@ const Game = {
                 
 
     generateWife() {
-        if (this.framesCounter % 323 == 0) {
+        if (this.framesCounter % 313 == 0) {
             
             this.wife.push(new Wife(this.ctx, this.width, this.height, "img/wife.png")); 
         }       
@@ -301,7 +331,7 @@ const Game = {
 
                 let woman = document.createElement("audio")
                 woman.src = "music/woman.wav"
-                woman.volume = .5
+                woman.volume = .4
                 woman.play()
             }
         })
@@ -325,7 +355,7 @@ const Game = {
     },
     
     generateEuflags() {
-        if (this.framesCounter % 49 == 0) {
+        if (this.framesCounter % 23 == 0) {
             
             this.euflags.push(new Euflag(this.ctx, this.width, this.height));
  
@@ -352,12 +382,22 @@ const Game = {
 
                 let facebook = document.createElement("audio")
                 facebook.src = "music/fuckyou.mp3"
-                facebook.volume = .5
+                facebook.volume = .4
                 facebook.play()
 
             }
         })
     },
+
+    drawTime0() {
+        
+            this.ctx.font = "bold 100px Helvetica, Arial, sans-serif";
+            this.ctx.fillStyle = "rgb(255, 157, 29)"
+            this.ctx.fillText((Math.floor(this.startin)), 280, 400);
+    
+
+    },
+
 
     drawTime() {
         this.ctx.font = "bold 50px Helvetica, Arial, sans-serif";
@@ -367,7 +407,7 @@ const Game = {
       
     drawTimeTitle() {
         this.ctx.font = "bold 50px Helvetica, Arial, sans-serif";
-        this.ctx.fillStyle = "white"
+        this.ctx.fillStyle = "rgb(255, 157, 29)"
         this.ctx.fillText("TIME:", this.canvas.width-235, 325);
     },
 
@@ -381,11 +421,25 @@ const Game = {
            if (this.totalTime==0) {
                             this.ctx.font = "bold 48px Helvetica, Arial, sans-serif";
                             this.ctx.fillText(`You have reached $${this.fortune} Billion `, this.canvas.width/2-100, this.canvas.height/2);
-                            this.level=true
+                            this.level=2
                             this.reset2()
             }
         
     },
+
+    startchrono() {
+        if (this.framesCounter % 60 == 0 && this.startin>=-1)  {
+        this.startin--
+        } else { 
+            this.startin
+        }
+           if (this.startin==0) {
+                            this.level=1
+                            this.reset1()
+            }
+        
+    },
+
 
     markCollision() {   
 

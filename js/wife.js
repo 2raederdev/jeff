@@ -7,8 +7,8 @@ class Wife {
         this.image = new Image()
         this.image.src = src
   
-        this.width = 110
-        this.height = 150
+        this.width = 120
+        this.height = 120
     
        this.posX = Math.floor(Math.random() * ((this.gameWidth-360) - 20)) + 20
 

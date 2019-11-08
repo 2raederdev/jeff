@@ -14,7 +14,7 @@ class Euflag {
      
         this.posY = 0-this.height 
 
-        this.velY = 4
+        this.velY = 5
     }
   
     draw() {

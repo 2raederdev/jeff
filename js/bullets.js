@@ -11,7 +11,7 @@ class Bullet {
         this.posX = x
         this.posY = y 
 
-      this.velY = 18
+      this.velY = 10
   
     }
   

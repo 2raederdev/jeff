@@ -54,13 +54,13 @@ class Player {
     shoot() {
       
       if(this.fortunita.length > 0) {
-        Game.level == undefined ? null : this.bullets.push(new Bullet(this.ctx, this.posX, this.posY))
+        Game.level <= 1 ? null : this.bullets.push(new Bullet(this.ctx, this.posX, this.posY))
 
         this.fortunita.pop()
 
         // let boxshoot = document.createElement("audio")
         // boxshoot.src = "music/mynameisjeff.mp3"
-        this.boxshoot.volume = .5
+        this.boxshoot.volume = .9
         this.boxshoot.play()
       } 
 

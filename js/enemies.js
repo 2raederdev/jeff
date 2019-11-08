@@ -24,6 +24,21 @@ class Enemies {
         this.ctx.drawImage(this.image,this.posX,this.posY,this.width,this.height)
     }
   
+    // speedUp() {
+    //     switch(Game.markLifes.length){
+    //         case 3:
+    //             this.velX
+    //         break
+    //         case 2:
+    //             this.velX += 2
+    //         break
+    //         case 1:
+    //             this.velX += 2
+            
+    //         break
+    //     }
+    // }
+
     move() {
 
         if (Game.markLifes.length > 0) {
