@@ -18,9 +18,7 @@ const Game = {
     fortune: 0,
     totalTime: 30,
     markLifes: [],
-    musicOn: true,
     music: new Audio("music/fondomusic.mp3"),
-    music2: new Audio("music/techno.mp3"),
     keys: {
         LEFT: 37,
         RIGHT: 39,
@@ -66,6 +64,7 @@ const Game = {
             this.clearDollars()
             this.clearWife()
             this.clearEuflags()
+            this.stopMusic()
             this.fondoMusic()
             if(this.fortune < 0) this.gameOver()
             this.chronometer()
@@ -76,7 +75,6 @@ const Game = {
             // this.enemies.speedUp()  
             this.markCollision()
             this.bulletCollision()
-            this.fondoMusic2()
             this.youWin()
             this.clearJeff()
             }
@@ -121,13 +119,6 @@ const Game = {
             this.music.volume = .3
             // this.music.loop = true
             this.music.play()
-    },
-
-    fondoMusic2() {
-        this.stopMusic()
-        this.music.volume = .4
-        // this.music.loop = true
-        this.music.play()
     },
 
     stopMusic() {
